@@ -31,6 +31,9 @@ const Franchise = mongoose.model('Franchise',{
         type: String, // SuperAdmin
         required: true
     },
+    managedBy:{
+        type: String, // Added by Super Admin once.
+    },
     franchiseAdmins: [{
         type:  String //FranchiseAdmin
     }]

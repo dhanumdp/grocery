@@ -62,6 +62,7 @@ router.post('/createFranchise',(req,res)=>{
         country : req.body.country,
         franchiseName : req.body.franchiseName,
         createdBy : req.body.createdBy, // In front end it comes through session variable,
+        managedBy:req.body.managedBy,
         franchiseAdmins : req.body.franchiseAdmins
     })
 
@@ -85,6 +86,67 @@ router.post('/createFranchise',(req,res)=>{
        }
    })
 })
+
+
+// add Franchise Admin
+
+router.post('/addFranchiseAdmin',(req,res)=>{
+
+
+    const user = new User({
+        fname : req.body.fname,
+        lname : req.body.lname,
+        email : req.body.email,
+        password : req.body.password,
+        role : "Franchise Admin",
+        address : req.body.address,
+        contact : req.body.contact
+    })
+
+    User.find({'email': req.body.email}).count((err,num)=>{
+        if(num != 0)
+        {
+         res.json({success:false, message:'Mail Id Exists. This user already registered.'})
+        }
+        else
+        {
+            user.save((err,doc)=>{
+                if(err)
+                {
+                    res.json({success:false, message : 'Registration Failed '+err})
+                }
+                else
+                {
+                    console.log({success:true, message : 'User Registered Successfully'})
+                }
+            });
+
+            Franchise.find({'pincode':req.body.pincode}, (err,doc)=>{
+                if(err)
+                {
+                    res.json({success:false, message : 'Error While Finding the Franchise'+err})
+                }
+                else
+                {
+                    Franchise.update({'pincode':req.body.pinCode},{ $set : {'managedBy': req.body.email}},(error)=>{
+                        if(error)
+                        {
+                            console.json({success:false, message : 'Error While Adding the Managing Person'+error})
+                        }
+                        else
+                        {
+                            res.json({success:true, message : 'Franchise Admin Added Successfully'})
+                        }
+                    })
+                }
+            })
+            
+        }
+    })
+
+    
+
+});
 
 
 
