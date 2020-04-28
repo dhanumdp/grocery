@@ -6,29 +6,34 @@ var mongoose = require('mongoose');
 const Inventory = mongoose.model('Inventory',{
 
     vendorId: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true
     },
     products: [{
-        productName: {
-            type: String,
-            required: true
-        },
         productId: {
             type: String, // autoGen by Us.
             required: true
         },
-        unit: {
+        productName: {
             type: String,
             required: true
         },
+      
+        productCategory:{
+            type:String,
+            required:true
+        },
+        unit: {
+            type: String,
+            
+        },
         quantity: {
             type: Number,
-            required: true
+            
         },
         stockCnt: {
             type: Number,
-            required: true
+          
         },
         MRP: {
             type: Number

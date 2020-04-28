@@ -83,7 +83,7 @@ app.use('/franchiseAdmin',franchiseAdminRoutes);
 
 //for vendorAdmin
 const vendorAdminRoutes = require('./routes/vendorAdminRoutes');
-app.use('/vendorAdmin',franchiseAdminRoutes);
+app.use('/vendorAdmin',vendorAdminRoutes);
 
 
 
